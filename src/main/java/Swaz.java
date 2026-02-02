@@ -49,10 +49,10 @@ public class Swaz {
                     
                     tasks[index].markDone();
                     printLine();
-                    
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println(tasks[index]);
                     printLine();
+                    
                 } catch (Exception e) {
                     System.out.println("Invalid task number.");
                 }
@@ -69,10 +69,10 @@ public class Swaz {
 
                     tasks[index].markNotDone();
                     printLine();
-                    
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println(tasks[index]);
                     printLine();
+                    
                 } catch (Exception e) {
                     System.out.println("Invalid task number.");
                 }
@@ -89,7 +89,6 @@ public class Swaz {
 
                 tasks[taskCount] = new ToDo(description);
                 taskCount++;
-
                 printAdded(tasks[taskCount - 1], taskCount);
                 continue;
             }
@@ -99,6 +98,7 @@ public class Swaz {
                 try {
                     String rest = input.substring("deadline ".length()).trim();
                     String[] parts = rest.split(" /by ", 2);
+                    
                     if (parts.length < 2) {
                         throw new IllegalArgumentException();
                     }
@@ -124,12 +124,14 @@ public class Swaz {
                 try {
                     String rest = input.substring("event ".length()).trim();
                     String[] firstSplit = rest.split(" /from ", 2);
+                    
                     if (firstSplit.length < 2) {
                         throw new IllegalArgumentException();
                     }
 
                     String description = firstSplit[0].trim();
                     String[] secondSplit = firstSplit[1].split(" /to ", 2);
+                    
                     if (secondSplit.length < 2) {
                         throw new IllegalArgumentException();
                     }
