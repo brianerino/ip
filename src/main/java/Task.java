@@ -16,12 +16,13 @@ public class Task {
         isDone = false;
     }
 
-    public String getStatus() {
+    public String getStatusIcon() {
         return isDone ? "X" : " ";
     }
     
+    @Override
     public String toString() {
-        return "[" + getStatus() + "] " + description;
+        return "[" + getStatusIcon() + "] " + description;
     }
 }
 
