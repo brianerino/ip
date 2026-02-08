@@ -1,3 +1,5 @@
+package swaz;
+
 public class SwazException extends Exception {
     
     public SwazException(String message) {
