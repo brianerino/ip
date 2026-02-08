@@ -1,9 +1,11 @@
+package swaz;
+
 import java.util.Scanner;
 
 public class Swaz {
     public static void main(String[] args) {
         
-        // Task List + Count
+        // swaz.Task List + Count
         Task[] tasks = new Task[100];
         int taskCount = 0;
         
@@ -160,7 +162,7 @@ public class Swaz {
         return input.substring("todo".length()).trim();
     }
 
-    // get Deadline <description> or error message
+    // get swaz.Deadline <description> or error message
     private static Task parseDeadline(String input) throws SwazException {
         String rest = input.substring("deadline".length()).trim();
 
@@ -179,7 +181,7 @@ public class Swaz {
         return new Deadline(description, by);
     }
 
-    // get Event <description> or error message
+    // get swaz.Event <description> or error message
     private static Task parseEvent(String input) throws SwazException {
         String rest = input.substring("event".length()).trim();
 
