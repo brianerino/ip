@@ -21,7 +21,21 @@ public class Task {
     public String getStatusIcon() {
         return isDone ? "X" : " ";
     }
-    
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    protected String getDescription() {
+        return description;
+    }
+
+    public String toStorageString() {
+        String status = isDone ? "1" : "0";
+        String type = "?";
+        return type + "|" + status + "|" + description;
+    }
+
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;

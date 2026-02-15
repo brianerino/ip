@@ -1,13 +1,26 @@
 package swaz;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Swaz {
     public static void main(String[] args) {
+
+        Storage storage = new Storage("data/swaz.txt");
         
         // swaz.Task List + Count
         Task[] tasks = new Task[100];
         int taskCount = 0;
+
+        // auto load data
+        try {
+            ArrayList<Task> loaded = storage.load();
+            for (Task task : loaded) {
+                tasks[taskCount++] = task;
+            }
+        } catch (SwazException e) {
+            printError(e.getMessage());
+        }
         
         // Opening message
         printLine();
@@ -46,6 +59,7 @@ public class Swaz {
                 if (input.startsWith("mark ")) {
                     int index = parseIndex(input, "mark", taskCount);
                     tasks[index].markDone();
+                    storage.save(tasks, taskCount);
                     printLine();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println(tasks[index]);
@@ -57,6 +71,7 @@ public class Swaz {
                 if (input.startsWith("unmark ")) {
                     int index = parseIndex(input, "unmark", taskCount);
                     tasks[index].markNotDone();
+                    storage.save(tasks, taskCount);
                     printLine();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println(tasks[index]);
@@ -69,6 +84,7 @@ public class Swaz {
                     String description = parseTodo(input);
                     tasks[taskCount] = new ToDo(description);
                     taskCount++;
+                    storage.save(tasks, taskCount);
                     printAdded(tasks[taskCount - 1], taskCount);
                     continue;
                 }
@@ -77,6 +93,7 @@ public class Swaz {
                 if (input.startsWith("deadline ")) {
                     Task task = parseDeadline(input);
                     tasks[taskCount++] = task;
+                    storage.save(tasks, taskCount);
                     printAdded(task, taskCount);
                     continue;
                 }
@@ -85,6 +102,7 @@ public class Swaz {
                 if (input.startsWith("event ")) {
                     Task task = parseEvent(input);
                     tasks[taskCount++] = task;
+                    storage.save(tasks, taskCount);
                     printAdded(task, taskCount);
                     continue;
                 }

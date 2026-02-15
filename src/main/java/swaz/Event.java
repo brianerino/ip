@@ -12,6 +12,12 @@ public class Event extends Task {
     }
 
     @Override
+    public String toStorageString() {
+        String status = isDone() ? "1" : "0";
+        return "E" + "|" + status + "|" + getDescription() + "|" + from + "|" + to;
+    }
+
+    @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
     } 
