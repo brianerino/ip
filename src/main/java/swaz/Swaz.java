@@ -1,14 +1,14 @@
 package swaz;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Swaz {
     public static void main(String[] args) {
         
         // swaz.Task List + Count
-        Task[] tasks = new Task[100];
-        int taskCount = 0;
-        
+        ArrayList<Task> tasks = new ArrayList<>();
+
         // Opening message
         printLine();
         System.out.println("Hello! I'm Swaz");
@@ -35,8 +35,8 @@ public class Swaz {
                 if (input.equals("list")) {
                     printLine();
                     System.out.println("Here are the tasks in your list:");
-                    for (int i = 0; i < taskCount; i++) {
-                        System.out.println((i + 1) + ". " + tasks[i]);
+                    for (int i = 0; i < tasks.size(); i++) {
+                        System.out.println((i + 1) + ". " + tasks.get(i));
                     }
                     printLine();
                     continue;
@@ -44,22 +44,34 @@ public class Swaz {
     
                 // mark
                 if (input.startsWith("mark ")) {
-                    int index = parseIndex(input, "mark", taskCount);
-                    tasks[index].markDone();
+                    int index = parseIndex(input, "mark", tasks.size());
+                    tasks.get(index).markDone();
                     printLine();
                     System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(tasks[index]);
+                    System.out.println(tasks.get(index));
                     printLine();
                     continue;
                 }
     
                 // unmark
                 if (input.startsWith("unmark ")) {
-                    int index = parseIndex(input, "unmark", taskCount);
-                    tasks[index].markNotDone();
+                    int index = parseIndex(input, "unmark", tasks.size());
+                    tasks.get(index).markNotDone();
                     printLine();
                     System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println(tasks[index]);
+                    System.out.println(tasks.get(index));
+                    printLine();
+                    continue;
+                }
+
+                // delete
+                if (input.startsWith("delete ")) {
+                    int index = parseIndex(input, "delete", tasks.size());
+                    Task removed = tasks.remove(index);
+                    printLine();
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(removed);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     printLine();
                     continue;
                 }
@@ -67,25 +79,25 @@ public class Swaz {
                 // todo <description>
                 if (input.startsWith("todo ")) {
                     String description = parseTodo(input);
-                    tasks[taskCount] = new ToDo(description);
-                    taskCount++;
-                    printAdded(tasks[taskCount - 1], taskCount);
+                    Task task = new ToDo(description);
+                    tasks.add(task);
+                    printAdded(task, tasks.size());
                     continue;
                 }
     
                 // deadline <description> /by <by>
                 if (input.startsWith("deadline ")) {
                     Task task = parseDeadline(input);
-                    tasks[taskCount++] = task;
-                    printAdded(task, taskCount);
+                    tasks.add(task);
+                    printAdded(task, tasks.size());
                     continue;
                 }
     
                 // event <description> /from <from> /to <to>
                 if (input.startsWith("event ")) {
                     Task task = parseEvent(input);
-                    tasks[taskCount++] = task;
-                    printAdded(task, taskCount);
+                    tasks.add(task);
+                    printAdded(task, tasks.size());
                     continue;
                 }
 
@@ -99,6 +111,15 @@ public class Swaz {
                     continue;
                 case "event":
                     printError("OOPS!!! Event format: event <description> /from <from> /to <to>");
+                    continue;
+                case "mark":
+                    printError("OOPS!!! Mark format: mark <integer>");
+                    continue;
+                case "unmark":
+                    printError("OOPS!!! Unmark format: unmark <integer>");
+                    continue;
+                case "delete":
+                    printError("OOPS!!! Delete format: delete <integer>");
                     continue;
                 default:
                     throw new SwazException("OOPS!!! I'm sorry, but I don't know what that means :(");
@@ -135,11 +156,6 @@ public class Swaz {
     private static int parseIndex(String input, String commandWord, int taskCount) throws SwazException {
         String numberPart = input.substring(commandWord.length()).trim();
 
-        // mark/unmark <task number> not given
-        if (numberPart.isEmpty()) {
-            throw new SwazException("OOPS!!! You must provide a task number. Example: " + commandWord + " 2");
-        }
-
         // <task number> is not an integer
         int taskNumber;
         try {
@@ -156,7 +172,8 @@ public class Swaz {
 
         return index;
     }
-
+    
+    
     // get Todo <description> or error message
     private static String parseTodo(String input) throws SwazException {
         return input.substring("todo".length()).trim();
