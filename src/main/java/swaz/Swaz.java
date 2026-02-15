@@ -5,10 +5,20 @@ import java.util.ArrayList;
 
 public class Swaz {
     public static void main(String[] args) {
+
+        Storage storage = new Storage("data/swaz.txt");
         
         // swaz.Task List + Count
         ArrayList<Task> tasks = new ArrayList<>();
 
+        // auto load data
+        try {
+            ArrayList<Task> loaded = storage.load();
+            tasks.addAll(loaded);
+        } catch (SwazException e) {
+            printError(e.getMessage());
+        }
+        
         // Opening message
         printLine();
         System.out.println("Hello! I'm Swaz");
@@ -46,6 +56,7 @@ public class Swaz {
                 if (input.startsWith("mark ")) {
                     int index = parseIndex(input, "mark", tasks.size());
                     tasks.get(index).markDone();
+                    storage.save(tasks);
                     printLine();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println(tasks.get(index));
@@ -57,6 +68,7 @@ public class Swaz {
                 if (input.startsWith("unmark ")) {
                     int index = parseIndex(input, "unmark", tasks.size());
                     tasks.get(index).markNotDone();
+                    storage.save(tasks);
                     printLine();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println(tasks.get(index));
@@ -68,6 +80,7 @@ public class Swaz {
                 if (input.startsWith("delete ")) {
                     int index = parseIndex(input, "delete", tasks.size());
                     Task removed = tasks.remove(index);
+                    storage.save(tasks);
                     printLine();
                     System.out.println("Noted. I've removed this task:");
                     System.out.println(removed);
@@ -81,6 +94,7 @@ public class Swaz {
                     String description = parseTodo(input);
                     Task task = new ToDo(description);
                     tasks.add(task);
+                    storage.save(tasks);
                     printAdded(task, tasks.size());
                     continue;
                 }
@@ -89,6 +103,7 @@ public class Swaz {
                 if (input.startsWith("deadline ")) {
                     Task task = parseDeadline(input);
                     tasks.add(task);
+                    storage.save(tasks);
                     printAdded(task, tasks.size());
                     continue;
                 }
@@ -97,6 +112,7 @@ public class Swaz {
                 if (input.startsWith("event ")) {
                     Task task = parseEvent(input);
                     tasks.add(task);
+                    storage.save(tasks);
                     printAdded(task, tasks.size());
                     continue;
                 }
@@ -120,7 +136,7 @@ public class Swaz {
                     continue;
                 case "delete":
                     printError("OOPS!!! Delete format: delete <integer>");
-                    continue;
+                    continue;    
                 default:
                     throw new SwazException("OOPS!!! I'm sorry, but I don't know what that means :(");
                 }
@@ -172,8 +188,7 @@ public class Swaz {
 
         return index;
     }
-    
-    
+
     // get Todo <description> or error message
     private static String parseTodo(String input) throws SwazException {
         return input.substring("todo".length()).trim();
