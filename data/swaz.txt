@@ -1,3 +1,4 @@
-T|0|hello
-E|0|run|now|tmrw
-T|1|code
+T|0|code
+D|0|drink milo|CNY
+E|1|run 2.4km|CNY|Christmas
+T|1|sing song
