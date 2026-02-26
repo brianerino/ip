@@ -1,5 +1,8 @@
 package swaz;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 public class Parser {
 
     public String getCommandWord(String input) {
@@ -56,6 +59,12 @@ public class Parser {
             throw new SwazException("OOPS!!! Deadline format: deadline <description> /by <by>");
         }
 
+        try {
+            LocalDate.parse(by);
+        } catch (DateTimeParseException e) {
+            throw new SwazException("OOPS!!! Date must be in yyyy-mm-dd format.");
+        }
+
         return new Deadline(description, by);
     }
 
@@ -77,6 +86,13 @@ public class Parser {
 
         if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
             throw new SwazException("OOPS!!! Event format: event <description> /from <from> /to <to>");
+        }
+
+        try {
+            LocalDate.parse(from);
+            LocalDate.parse(to);
+        } catch (DateTimeParseException e) {
+            throw new SwazException("OOPS!!! Dates must be in yyyy-mm-dd format.");
         }
 
         return new Event(description, from, to);

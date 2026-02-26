@@ -1,24 +1,28 @@
 package swaz;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
-    private final String from;
-    private final String to;
+    private LocalDate from;
+    private LocalDate to;
 
     // constructor
     public Event(String description, String from, String to) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.from = LocalDate.parse(from);
+        this.to = LocalDate.parse(to);
     }
 
     @Override
     public String toStorageString() {
         String status = isDone() ? "1" : "0";
-        return "E" + "|" + status + "|" + getDescription() + "|" + from + "|" + to;
+        return "E" + "|" + status + "|" + getDescription() + "|" + from.toString() + "|" + to.toString();
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
+        return "[E]" + super.toString() + " (from: " + from.format(formatter) + " to: " + to.format(formatter) + ")";
     } 
 }

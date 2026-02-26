@@ -1,4 +1,4 @@
-T|0|code
-D|0|drink milo|CNY
-E|1|run 2.4km|CNY|Christmas
-T|1|sing song
+T|0|hello world
+D|1|buy food|2026-02-28
+E|1|hello|2026-02-26|2026-03-22
+E|0|watch|2026-02-18|2026-03-12
