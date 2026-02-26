@@ -3,8 +3,17 @@ package swaz;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Parses user input into command words and extracts arguments needed to create tasks or perform actions.
+ */
 public class Parser {
 
+    /**
+     * Extracts the first word (command word) from the user input.
+     *
+     * @param input full user input
+     * @return command word, or empty string if input is blank
+     */
     public String getCommandWord(String input) {
         String trimmed = input.trim();
         if (trimmed.isEmpty()) {
@@ -13,7 +22,15 @@ public class Parser {
         return trimmed.split("\\s+", 2)[0];
     }
 
-    // get mark/unmark index or error message
+    /**
+     * Parses a 1-based task number from the input and converts it to a 0-based index.
+     *
+     * @param input full user input
+     * @param commandWord command keyword (e.g., "mark", "delete")
+     * @param taskCount current number of tasks
+     * @return zero-based index into the task list
+     * @throws SwazException if the index is missing, not an integer, or out of range
+     */
     public int parseIndex(String input, String commandWord, int taskCount) throws SwazException {
         String numberPart = input.substring(commandWord.length()).trim();
 
