@@ -35,4 +35,15 @@ public class TaskList {
     public ArrayList<Task> asArrayList() {
         return tasks;
     }
+
+    // find <keyword>
+    public ArrayList<Task> find(String keyword) {
+        ArrayList<Task> matches = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)) {
+                matches.add(task);
+            }
+        }
+        return matches;
+    }
 }

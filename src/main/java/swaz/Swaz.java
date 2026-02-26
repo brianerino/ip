@@ -79,6 +79,15 @@ public class Swaz {
                     ui.printAdded(task, tasks.size());
                     break;
                 }
+                case "find": {
+                    String keyword = input.substring("find".length()).trim();
+                    if (keyword.isEmpty()) {
+                        throw new SwazException("OOPS!!! Find format: find <keyword>");
+                    }
+                    var matches = tasks.find(keyword);
+                    ui.showFindResults(matches);
+                    break;
+                }
                 default:
                     throw new SwazException("OOPS!!! I'm sorry, but I don't know what that means :(");
                 }
