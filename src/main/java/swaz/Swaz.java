@@ -2,12 +2,21 @@ package swaz;
 
 import java.util.ArrayList;
 
+/**
+ * Main entry point of the Swaz task manager application.
+ * Coordinates user interaction, command parsing, task list operations, and storage.
+ */
 public class Swaz {
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
     private final Parser parser;
 
+    /**
+     * Constructs a Swaz instance using the given file path for persistent storage.
+     *
+     * @param filePath path to the save file used to load and save tasks
+     */
     public Swaz(String filePath) {
         ui = new Ui();
         parser = new Parser();
@@ -22,6 +31,9 @@ public class Swaz {
         }
     }
 
+    /**
+     * Runs the main command loop of the application until the user exits.
+     */
     public void run() {
         ui.printWelcome();
 
@@ -97,6 +109,11 @@ public class Swaz {
         }
     }
 
+    /**
+     * Starts the application.
+     *
+     * @param args command-line arguments (unused)
+     */
     public static void main(String[] args) {
         new Swaz("data/swaz.txt").run();
     }

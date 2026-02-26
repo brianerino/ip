@@ -3,6 +3,9 @@ package swaz;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * Handles all interactions with the user, including reading commands and printing outputs.
+ */
 public class Ui {
     private final Scanner scanner;
 
@@ -10,11 +13,18 @@ public class Ui {
         scanner = new Scanner(System.in);
     }
 
+    /**
+     * Reads a single command line from the user.
+     *
+     * @return user input string
+     */
     public String readCommand() {
         return scanner.nextLine().trim();
     }
-
-    // print opening message
+    
+    /**
+     * Displays the opening message to the user.
+     */
     public void printWelcome() {
         printLine();
         System.out.println("  ______   __       __   ______   ________ \n" +
@@ -45,21 +55,29 @@ public class Ui {
         printLine();
     }
 
-    // print error message
+    /**
+     * Displays an error message to the user.
+     *
+     * @param message error message
+     */
     public void printError(String message) {
         printLine();
         System.out.println(message);
         printLine();
     }
 
-    // print closing message
+    /**
+     * Displays the closing message to the user.
+     */
     public void printBye() {
         printLine();
         System.out.println("Sayonara!! Hope to see you again soon!");
         printLine();
     }
 
-    // print list of items in task list
+    /**
+     * Displays the list of tasks to the user.
+     */
     public void printList(TaskList tasks) {
         printLine();
         System.out.println("Here are the tasks in your list:");
@@ -68,8 +86,10 @@ public class Ui {
         }
         printLine();
     }
-    
-    // mark task as done
+
+    /**
+     * Displays the tasks as done.
+     */
     public void printMarked(Task task) {
         printLine();
         System.out.println("Nice! I've marked this task as done:");
@@ -77,7 +97,9 @@ public class Ui {
         printLine();
     }
 
-    // unmark tasks
+    /**
+     * Displays the tasks as undone.
+     */
     public void printUnmarked(Task task) {
         printLine();
         System.out.println("OK, I've marked this task as not done yet:");
@@ -85,7 +107,9 @@ public class Ui {
         printLine();
     }
 
-    // remove task
+    /**
+     * Deletes tasks from task list.
+     */
     public void printDeleted(Task removed, int taskCount) {
         printLine();
         System.out.println("Noted. I've removed this task:");
@@ -98,7 +122,9 @@ public class Ui {
         printError(message);
     }
 
-    // find results that match keywords
+    /**
+     * Displays tasks that matches keywords in task list.
+     */
     public void showFindResults(ArrayList<Task> matches) {
         printLine();
         System.out.println("Here are the matching tasks in your list:");

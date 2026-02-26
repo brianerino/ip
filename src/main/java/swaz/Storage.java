@@ -6,6 +6,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles loading tasks from a file and saving tasks to a file.
+ * The storage format uses one task per line with '|' as the delimiter.
+ */
 public class Storage {
     private final Path filePath;
 
@@ -14,9 +18,11 @@ public class Storage {
         this.filePath = Path.of(relativePath);
     }
 
-    // check if file exists
-    // file does not exist, create parent folders
-    // creates data/swaz.txt 
+    /**
+     * Ensures the save file exists by creating parent directories and the file if needed.
+     *
+     * @throws SwazException if the file cannot be created
+     */
     public void createFileIfMissing() throws SwazException {
         try {
             if (!Files.exists(filePath)) {
@@ -31,7 +37,12 @@ public class Storage {
         }
     }
 
-    // load task from file when swaz starts up
+    /**
+     * Loads tasks from the save file into a list of Task objects.
+     *
+     * @return list of tasks loaded from file
+     * @throws SwazException if the file cannot be read or contains corrupted task data
+     */
     public ArrayList<Task> load() throws SwazException {
         createFileIfMissing();
         
@@ -52,6 +63,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the current task list to the save file.
+     *
+     * @param tasks tasks to be saved
+     * @throws SwazException if the file cannot be written
+     */
     // save tasks to file after every modification
     public void save(ArrayList<Task> tasks) throws SwazException {
         createFileIfMissing();

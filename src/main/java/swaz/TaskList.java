@@ -2,6 +2,9 @@ package swaz;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the in-memory list of tasks and provides operations to add, remove, and retrieve tasks.
+ */
 public class TaskList {
     private final ArrayList<Task> tasks;
 
@@ -22,12 +25,21 @@ public class TaskList {
         return tasks.get(index);
     }
 
-    // add a task
+    /**
+     * Adds a task to the list.
+     *
+     * @param task task to add
+     */
     public void add(Task task) {
         tasks.add(task);
     }
 
-    // remove a task
+    /**
+     * Removes a task at the given index.
+     *
+     * @param index zero-based index
+     * @return the removed task
+     */
     public Task remove(int index) {
         return tasks.remove(index);
     }
@@ -36,7 +48,12 @@ public class TaskList {
         return tasks;
     }
 
-    // find <keyword>
+    /**
+     * Finds tasks whose description contains the given keyword.
+     *
+     * @param keyword keyword to search for
+     * @return list of matching tasks (may be empty)
+     */
     public ArrayList<Task> find(String keyword) {
         ArrayList<Task> matches = new ArrayList<>();
         for (Task task : tasks) {
