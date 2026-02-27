@@ -43,7 +43,7 @@ public class Ui {
     
     // print horizontal line
     public void printLine() {
-        System.out.println("----------------------------------");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
     // print added tasks
@@ -71,6 +71,15 @@ public class Ui {
      */
     public void printBye() {
         printLine();
+        System.out.println(" _______   __      __  ________ \n" +
+                "/       \\ /  \\    /  |/        |\n" +
+                "$$$$$$$  |$$  \\  /$$/ $$$$$$$$/ \n" +
+                "$$ |__$$ | $$  \\/$$/  $$ |__    \n" +
+                "$$    $$<   $$  $$/   $$    |   \n" +
+                "$$$$$$$  |   $$$$/    $$$$$/    \n" +
+                "$$ |__$$ |    $$ |    $$ |_____ \n" +
+                "$$    $$/     $$ |    $$       |\n" +
+                "$$$$$$$/      $$/     $$$$$$$$/ \n");
         System.out.println("Sayonara!! Hope to see you again soon!");
         printLine();
     }
